@@ -1,0 +1,59 @@
+﻿@model School.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Information)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Information)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Add Person", "AllStudents", new { id = Model.ID }) |
+</p>
+
+<div class="row">
+@foreach (var item in Model.Students)
+{
+    <div class="row"> 
+        @item.FirstName - @item.LastName
+        @Html.ActionLink("Remove", "RemoveStudent", new { id = Model.ID, sId = item.ID })
+    </div>
+}
+</div>
+
+<div class="row">
+
+@foreach (var item in Model.Teachers)
+{
+    <div class="row"> @item.FirstName - @item.LastName</div>
+}
+</div>
+<div class="row">
+
+@foreach(var item in Model.Assignments)
+{
+    <div class="row"> @item.Name - @item.Information</div>
+}
+</div>
+
