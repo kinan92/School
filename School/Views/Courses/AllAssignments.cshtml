@@ -1,0 +1,35 @@
+﻿@model List<School.Models.Assignment>
+
+@{
+    ViewBag.Title = "AllAssignments";
+}
+
+<h2>AllAssignments</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(Model => Model[0].Name)
+<p>
+    <div>@Html.ActionLink("Back to list", "Details")</div>
+</p>
+        </th>
+
+    </tr>
+
+  
+ @foreach (var item in Model)
+ {
+        <tr>
+            <td>
+                @Html.DisplayFor(Model => item.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Add", "AssignmentsToCourses", new { id = ViewBag.cId, aId = item.ID })
+            </td>
+        </tr>
+ }
+
+</table>

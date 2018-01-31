@@ -13,9 +13,9 @@ namespace School.Models
 
         public string Information { get; set; }
 
-        public List<Student> Students { get; set; }
+        public virtual List<Student> Students { get; set; }
         public List<Teacher> Teachers { get; set; }
-        public List<Assignment> Assignments { get; set; }
+        public virtual List<Assignment> Assignments { get; set; }
 
 
     }

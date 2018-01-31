@@ -157,10 +157,100 @@ namespace School.Controllers
             if (id < 1 || sId < 1)
                 return RedirectToAction("Index");
             Course course = db.Courses.Include("Students").FirstOrDefault(x => x.ID == id);
-            if(course != null)
+            if (course != null)
             {
                 Student student = course.Students.FirstOrDefault(x => x.ID == sId);
                 course.Students.Remove(student);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", new { id = id });
+        }
+
+
+        [HttpGet]
+        public ActionResult AllTeachers(int id = 0)
+        {
+            if (id < 1)
+                return RedirectToAction("Index");
+            List<Teacher> teacher = db.Teachers.Include("Courses").Where(x => x.Courses.FirstOrDefault(a => a.ID == id) == null).ToList();
+            ViewBag.cId = id;              //////////// Cours ID//////
+            return View(teacher);
+        }
+        [HttpGet]
+        public ActionResult TeachertToCourses(int id = 0, int tId = 0)
+        {
+            if (tId < 1 || id < 1)
+            {
+                return RedirectToAction("Index");
+            }
+            Teacher teacher = db.Teachers.FirstOrDefault(s => s.ID == tId);
+            if (teacher == null)
+                return RedirectToAction("Details", new { id = id });
+            Course course = db.Courses.Include("Teachers").SingleOrDefault(c => c.ID == id);
+            if (course == null)
+                return RedirectToAction("Details", new { id = id });
+            course.Teachers.Add(teacher);   ///Add Teacher
+            db.SaveChanges();       /// Save Changes to the  Data Base
+
+            return RedirectToAction("Details", new { id = id });
+        }
+
+        public ActionResult RemoveTeachers(int id = 0, int tId = 0)
+        {
+            if (id < 1 || tId < 1)
+                return RedirectToAction("Index");
+            Course course = db.Courses.Include("Teachers").FirstOrDefault(x => x.ID == id);
+            if (course != null)
+            {
+                Teacher teacher = course.Teachers.FirstOrDefault(x => x.ID == tId);
+                course.Teachers.Remove(teacher);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", new { id = id });
+        }
+
+   
+        [HttpGet]
+        public ActionResult AllAssignments(int id = 0)
+        {
+            if (id < 1)
+                return RedirectToAction("Index");
+            Course course = db.Courses.Include("Assignments").FirstOrDefault(x => x.ID == id);
+
+            List<Assignment> assignments = db.Assignments.ToList();
+
+            ViewBag.cId = id;              //////////// Cours ID//////
+            return View(assignments);
+
+        }
+        [HttpGet]
+        public ActionResult AssignmentsToCourses(int id = 0, int aId = 0)
+        {
+            if (aId < 1 || id < 1)
+            {
+                return RedirectToAction("Index");
+            }
+            Assignment assignments = db.Assignments.FirstOrDefault(s => s.ID == aId);
+            if (assignments == null)
+                return RedirectToAction("Details", new { id = id });
+            Course course = db.Courses.Include("Assignments").SingleOrDefault(c => c.ID == id);
+            if (course == null)
+                return RedirectToAction("Details", new { id = id });
+            course.Assignments.Add(assignments);   ///Add AssignmentsToCourses
+            db.SaveChanges();       /// Save Changes to the  Data Base
+
+            return RedirectToAction("Details", new { id = id });
+        }
+
+        public ActionResult RemoveAssignment(int id = 0, int aId = 0)
+        {
+            if (id < 1 || aId < 1)
+                return RedirectToAction("Index");
+            Course course = db.Courses.Include("Assignments").FirstOrDefault(x => x.ID == id);
+            if (course != null)
+            {
+                Assignment assignments = course.Assignments.FirstOrDefault(x => x.ID == aId);
+                course.Assignments.Remove(assignments);
                 db.SaveChanges();
             }
             return RedirectToAction("Details", new { id = id });

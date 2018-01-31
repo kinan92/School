@@ -28,32 +28,49 @@
 
     </dl>
 </div>
+<div>@Html.ActionLink("Back to List", "Index")</div>
 <p>
-    @Html.ActionLink("Add Person", "AllStudents", new { id = Model.ID }) |
+    @Html.ActionLink("Add Student", "AllStudents", new { id = Model.ID }) |
+    @Html.ActionLink("Add Teacher", "AllTeachers", new { id = Model.ID }) |
+    @Html.ActionLink("Add Assignment", "AllAssignments", new { id = Model.ID })
 </p>
 
-<div class="row">
-@foreach (var item in Model.Students)
-{
-    <div class="row"> 
-        @item.FirstName - @item.LastName
-        @Html.ActionLink("Remove", "RemoveStudent", new { id = Model.ID, sId = item.ID })
-    </div>
-}
+<div class="dl-horizontal">
+    <h4>Students</h4>
+    <dl class="row">
+        @foreach (var item in Model.Students)
+        {
+            <dd class="row">
+                @item.FirstName - @item.LastName
+                @Html.ActionLink("Remove", "RemoveStudent", new { id = Model.ID, sId = item.ID })
+            </dd>
+        }
+    </dl>
+</div>
+
+<div class="dl-horizontal">
+    <h4>Teachers</h4>
+    <dl class="row">
+        @foreach (var item in Model.Teachers)
+        {
+            <dd class="row">
+                @item.FirstName - @item.LastName
+                @Html.ActionLink("Remove", "RemoveTeachers", new { id = Model.ID, tId = item.ID })
+            </dd>
+        }
+    </dl>
 </div>
 
 <div class="row">
-
-@foreach (var item in Model.Teachers)
-{
-    <div class="row"> @item.FirstName - @item.LastName</div>
-}
-</div>
-<div class="row">
-
-@foreach(var item in Model.Assignments)
-{
-    <div class="row"> @item.Name - @item.Information</div>
-}
+    <h4>Assignments</h4>
+    <dl class="row">
+        @foreach (var item in Model.Assignments)
+        {
+            <dd class="row">
+                @item.Name - @item.Information
+                @Html.ActionLink("Remove", "RemoveAssignment", new { id = Model.ID, aId = item.ID })
+            </dd>
+        }
+    </dl>
 </div>
 

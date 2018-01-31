@@ -26,25 +26,30 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
+    </dl>
+</div>
+<div class="dl-horizontal">
+    <h4>Courses</h4>
+    <dl class="row">
+        @foreach (var item in Model.Courses)
+        {
+            <dd class="row">
+              <p>@item.Name : @item.Information</p>
+                <ul>
+                   @foreach (var iTEM in item.Assignments)
+                    {
+                    <li>
+                        @iTEM.Name
+                    </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
+                    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
+                    
+                </ul>
+            </dd>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

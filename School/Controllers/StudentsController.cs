@@ -21,16 +21,16 @@ namespace School.Controllers
         }
 
         // GET: Students/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id = 0)
         {
-            if (id == null)
+            if (id < 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Include("Courses").SingleOrDefault(x => x.ID == id);
             if (student == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(student);
         }
@@ -122,6 +122,34 @@ namespace School.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpGet]
+        public ActionResult AllCourses(int id = 0)
+        {
+            if (id < 1)
+                return RedirectToAction("Index");
+            List<Course> course = db.Courses.Include("Students").Where(x => x.Students.FirstOrDefault(a => a.ID == id) == null).ToList();
+            ViewBag.sId = id;              //////////// Cours ID//////
+            return View(course);
+        }
+        [HttpGet]
+        public ActionResult CoursesToStudents(int id = 0, int cId = 0)
+        {
+            if (cId < 1 || id < 1)
+            {
+                return RedirectToAction("Index");
+            }
+            Course course = db.Courses.FirstOrDefault(s => s.ID == cId);
+            if (course == null)
+                return RedirectToAction("Details", new { id = id });
+            Student student = db.Students.Include("Courses").SingleOrDefault(c => c.ID == id);
+            if (course == null)
+                return RedirectToAction("Details", new { id = id });
+            student.Courses.Add(course);   ///Add course
+            db.SaveChanges();       /// Save Changes to the  Data Base
+
+            return RedirectToAction("Details", new { id = id });
         }
     }
 }

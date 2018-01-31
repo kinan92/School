@@ -1,0 +1,35 @@
+﻿@model IEnumerable<School.Models.Teacher>
+
+@{
+    ViewBag.Title = "AllTeachers";
+}
+
+<h2>AllTeachers</h2>
+<div>@Html.ActionLink("Back to list", "Details")</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>              
+        <td>
+            @Html.ActionLink("Add", "TeachertToCourses", new { id = ViewBag.cId, tId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+

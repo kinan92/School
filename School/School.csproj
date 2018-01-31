@@ -166,6 +166,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Courses\StudentToCourses.cshtml" />
     <Content Include="Views\Courses\AllStudents.cshtml" />
+    <Content Include="Views\Courses\AllTeachers.cshtml" />
+    <Content Include="Views\Courses\TeachertToCourses.cshtml" />
+    <Content Include="Views\Courses\AllAssignments.cshtml" />
+    <Content Include="Views\Courses\AssignmentsToCourses.cshtml" />
+    <Content Include="Views\Students\AllCourses.cshtml" />
+    <Content Include="Views\Students\CoursesToStudents.cshtml" />
+    <Content Include="Views\Teachers\AllCourses.cshtml" />
+    <Content Include="Views\Teachers\CoursesToTeachers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
